@@ -41,16 +41,16 @@
 
         detailsExperimentation = function (data) {
             // console.log(typeof(data), data);
-            let details = `<div class="details">
+            let panel = `<div class="details">
                 <h2>TODO</h2><!-- TODO : où je trouve la localisation ? -->`
-            let technos = Object.entries(data)
-                .filter(([k, v]) => k.startsWith("Techno - ") && data[k] > 0)
-                .reduce((acc, [k, v]) => `<li>${k.substring(9)}</li > `, "") // TODO gérer les images et le style des listes
-            if (technos) {
-                details = `${details} <ul class="technos">${technos}</ul>`
+            let usages = Object.entries(data)
+                .filter(([k, v]) => k.startsWith("Usage - ") && data[k] > 0)
+                .reduce((acc, [k, v]) => `<li>${k.substring(8)}</li > `, "") // TODO gérer les images et le style des listes
+            if (usages) {
+                panel = `${panel} <ul class="usages">${usages}</ul>`
             }
-            details = `${details}</div>`
-            return details
+            panel = `${panel}</div>`
+            return panel
         }
 
         HEADER_EXPERIMENTATEUR = "Expérimentateur"
