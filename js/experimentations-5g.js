@@ -1,12 +1,22 @@
+const HEADER_EXPERIMENTATEUR = "Expérimentateur"
+const HEADER_FREQUENCES = "Fréquences utilisées"
+const HEADER_DECISION_NUMERO = "Numéro de la décision d'autorisation de l'Arcep"
+const HEADER_DECISION_LIEN = "Lien de la décision d'autorisation de l'Arcep"
+const HEADER_TECHNO_PREFIXE = "Techno - "
+const HEADER_USAGE_PREFIXE = "Usage - "
+const HEADER_DESCRIPTION = "Description"
 
-
-HEADER_EXPERIMENTATEUR = "Expérimentateur"
-HEADER_FREQUENCES = "Fréquences utilisées"
-HEADER_DECISION_NUMERO = "Numéro de la décision d'autorisation de l'Arcep"
-HEADER_DECISION_LIEN = "Lien de la décision d'autorisation de l'Arcep"
-HEADER_TECHNO_PREFIXE = "Techno - "
-HEADER_USAGE_PREFIXE = "Usage - "
-HEADER_DESCRIPTION = "Description"
+const TOOLTIP_TECHNOS = {
+    "Massive Mimo": "Utilisation d'un nombre très important d'antennes, interférant entre elles de manière contrôlée",
+    "Beamforming": "Formation de faisceaux d'ondes radio dirigés vers l'utilisateur",
+    "Duplexage temporel (mode TDD)": "Utilisation d'une même bande de fréquences alternativement en sens montant et en sens descendant",
+    "Mode de fonctionnement NSA (Non Stand Alone)": "Mode de fonctionnement non autonome de la 5G, où le réseau 5G vient en addition d'un réseau 4G",
+    "Mode de fonctionnement SA (Stand Alone)": "Mode de fonctionnement autonome de la 5G, où le réseau 5G est déployé comme un nouveau réseau de bout en bout",
+    "Synchronisation de réseaux": "Application d'une même répartition dans le temps des phases d'émission et de réception entre les stations de bases et les terminaux de plusieurs réseaux",
+    "Network slicing": "Adaptation et reconfiguration du réseau de manière dynamique, de manière à adapter les performances en fonction des usages ciblés",
+    "Small cells": "Installation d'antennes radio de petite taille et de faible portée, par exemple pour couvrir l'intérieur des bâtiments",
+    "Accès dynamique au spectre": "Technique permettant de basculer dynamiquement d'un bloc de fréquences à l'autre",
+}
 
 const panelExperimentation = function (data) {
     let panel = `<div class="details">
@@ -40,10 +50,14 @@ const panelExperimentation = function (data) {
 
     let technos = Object.entries(data)
         .filter(([k, v]) => k.startsWith(HEADER_TECHNO_PREFIXE) && v)
-        .map(([k, v]) => k.substring(HEADER_TECHNO_PREFIXE.length)) // TODO glossaire ?
+        .map(([k, v]) => {
+            const libelle = k.substring(HEADER_TECHNO_PREFIXE.length)
+            const glossaire = libelle in TOOLTIP_TECHNOS ? TOOLTIP_TECHNOS[libelle] : ''
+            return `<span title="${glossaire}">${libelle}</span>` // TODO essayer d'activer les tooltips Bootstrap ?
+        })
         .join(', ')
     if (technos) {
-        panel += `<tr><th>Technologies testées</th><td>${technos}</td>`
+        panel += `<tr><th>Technologies testées</th><td class="technos">${technos}</td>`
     }
     panel += "</table>"
 

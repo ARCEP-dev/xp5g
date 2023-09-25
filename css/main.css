@@ -1,3 +1,6 @@
 #map { /* TODO définir une hauteur 100% qui fonctionne */
   height: 700px;
 }
+.technos [title] {
+  text-decoration: underline dotted;
+}
