@@ -13,7 +13,8 @@
     <meta property="og:url" content=""> <!-- TODO -->
     <meta property="og:image" content=""> <!-- TODO -->
 
-    <link rel="stylesheet" href="css/normalize.css">
+    <link rel="stylesheet" href="https://unpkg.com/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
     <link rel="stylesheet" href="css/main.css">
 
     <meta name="theme-color" content="#fafafa">
@@ -24,6 +25,9 @@
         integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
     <script src="https://www.unpkg.com/papaparse@5.4.1/papaparse.min.js"
         integrity="sha384-D/t0ZMqQW31H3az8ktEiNb39wyKnS82iFY52QPACM+IjKW3jDUhyIgh2PApRqJZs"
+        crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
         crossorigin="anonymous"></script>
 </head>
 
@@ -58,7 +62,7 @@
                 panel += `<ul class="usages">${usages}</ul>`
             }
 
-            panel += `<table>`
+            panel += `<div class="table-responsive"><table class="table">`
             if (data[HEADER_EXPERIMENTATEUR]) {
                 panel += `<tr><th>${HEADER_EXPERIMENTATEUR}</th><td>${data[HEADER_EXPERIMENTATEUR]}</td>`
             }
