@@ -4,3 +4,6 @@
 .technos [title] {
   text-decoration: underline dotted;
 }
+.technos [title]:hover {
+  cursor: help;
+}
