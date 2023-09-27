@@ -6,9 +6,10 @@ const HEADER_TECHNO_PREFIXE = "Techno - "
 const HEADER_USAGE_PREFIXE = "Usage - "
 const HEADER_DESCRIPTION = "Description"
 
+
 const TOOLTIP_TECHNOS = {
-    "Massive Mimo": "Utilisation d'un nombre très important d'antennes, interférant entre elles de manière contrôlée",
-    "Beamforming": "Formation de faisceaux d'ondes radio dirigés vers l'utilisateur",
+    "Massive MIMO": "Utilisation d'un nombre très important d'antennes, interférant entre elles de manière contrôlée",
+    "Beamforming/beamtracking": "Formation de faisceaux d'ondes radio dirigés vers l'utilisateur",
     "Duplexage temporel (mode TDD)": "Utilisation d'une même bande de fréquences alternativement en sens montant et en sens descendant",
     "Mode de fonctionnement NSA (Non Stand Alone)": "Mode de fonctionnement non autonome de la 5G, où le réseau 5G vient en addition d'un réseau 4G",
     "Mode de fonctionnement SA (Stand Alone)": "Mode de fonctionnement autonome de la 5G, où le réseau 5G est déployé comme un nouveau réseau de bout en bout",
@@ -52,8 +53,8 @@ const panelExperimentation = function (data) {
         .filter(([k, v]) => k.startsWith(HEADER_TECHNO_PREFIXE) && v)
         .map(([k, v]) => {
             const libelle = k.substring(HEADER_TECHNO_PREFIXE.length)
-            const glossaire = libelle in TOOLTIP_TECHNOS ? TOOLTIP_TECHNOS[libelle] : ''
-            return `<span title="${glossaire}">${libelle}</span>` // TODO essayer d'activer les tooltips Bootstrap ?
+            const title = libelle in TOOLTIP_TECHNOS ? ` title="${TOOLTIP_TECHNOS[libelle]}"` : ''
+            return `<span${title}>${libelle}</span>` // TODO essayer d'activer les tooltips Bootstrap ?
         })
         .join(', ')
     if (technos) {
