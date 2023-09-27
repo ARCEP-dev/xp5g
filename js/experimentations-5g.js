@@ -19,15 +19,32 @@ const TOOLTIP_TECHNOS = {
     "Accès dynamique au spectre": "Technique permettant de basculer dynamiquement d'un bloc de fréquences à l'autre",
 }
 
+const IMG_USAGES = {
+    "Mobilité connectée": "https://arcep.fr/fileadmin/reprise/dossiers/thd-radio/Expes5G/pictos/Voitureconnectee.png",
+    "Internet des objets": "https://arcep.fr/fileadmin/reprise/dossiers/thd-radio/Expes5G/pictos/IoT.png",
+    "Ville intelligente": "https://arcep.fr/fileadmin/reprise/dossiers/thd-radio/Expes5G/pictos/Smartcity.png",
+    "Télémédecine": "https:/arcep.fr//fileadmin/reprise/dossiers/thd-radio/Expes5G/pictos/Medecine.png",
+    "Réalité virtuelle": "https://arcep.fr/fileadmin/reprise/dossiers/thd-radio/Expes5G/pictos/VR.png",
+    "Industrie du futur": "https://arcep.fr/fileadmin/reprise/dossiers/thd-radio/Expes5G/pictos/Industrie.png",
+    "Jeu Vidéo": "https://arcep.fr/fileadmin/reprise/dossiers/thd-radio/Expes5G/pictos/Jeuvideo.png",
+    "Technique ou R&D": "", // TODO
+    "Autre": "", // TODO
+}
+
+
 const panelExperimentation = function (data) {
     let panel = `<div class="details">
         <h2>TODO</h2><!-- TODO : où je trouve la localisation ? -->`
 
     let usages = Object.entries(data)
         .filter(([k, v]) => k.startsWith(HEADER_USAGE_PREFIXE) && v)
-        .reduce((acc, [k, v]) => `<li>${k.substring(HEADER_USAGE_PREFIXE.length)}</li > `, "") // TODO gérer les images et le style des listes
+        .reduce((acc, [k, v]) => {
+            usage = k.substring(HEADER_USAGE_PREFIXE.length)
+            image = IMG_USAGES[usage] || ''
+            return `<li class="list-group-item"><img src="${image}" alt="${usage}" title="${usage}" height="30px"></img></li > `
+        }, "")
     if (usages) {
-        panel += `<ul class="usages">${usages}</ul>`
+        panel += `<ul class="usages list-group list-group-horizontal">${usages}</ul>`
     }
 
     panel += `<div class="table-responsive"><table class="table">`
