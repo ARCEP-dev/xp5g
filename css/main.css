@@ -1,9 +1,16 @@
-#map { /* TODO définir une hauteur 100% qui fonctionne */
+#map {
+  /* TODO définir une hauteur 100% qui fonctionne */
   height: 700px;
 }
+
+.details {
+  min-width: 300px;
+}
+
 .technos [title] {
   text-decoration: underline dotted;
 }
+
 .technos [title]:hover {
   cursor: help;
 }

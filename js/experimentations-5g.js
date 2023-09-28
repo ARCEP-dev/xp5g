@@ -34,23 +34,20 @@ const IMG_USAGES = {
 
 const panelExperimentation = function (data) {
     let panel = `<div class="details">
-        <h2>TODO</h2><!-- TODO : où je trouve la localisation ? -->`
+        <h2>${data[HEADER_EXPERIMENTATEUR]}</h2>`
 
     let usages = Object.entries(data)
         .filter(([k, v]) => k.startsWith(HEADER_USAGE_PREFIXE) && v)
         .reduce((acc, [k, v]) => {
             usage = k.substring(HEADER_USAGE_PREFIXE.length)
             image = IMG_USAGES[usage] || ''
-            return `<li class="list-group-item"><img src="${image}" alt="${usage}" title="${usage}" height="30px"></img></li > `
+            return `${acc}<li class="list-group-item"><img src="${image}" alt="${usage}" title="${usage}" height="30px"></img></li > `
         }, "")
     if (usages) {
         panel += `<ul class="usages list-group list-group-horizontal">${usages}</ul>`
     }
 
     panel += `<div class="table-responsive"><table class="table">`
-    if (data[HEADER_EXPERIMENTATEUR]) {
-        panel += `<tr><th>${HEADER_EXPERIMENTATEUR}</th><td>${data[HEADER_EXPERIMENTATEUR]}</td>`
-    }
     if (data[HEADER_DECISION_NUMERO]) {
         panel += `
         <tr>
@@ -83,7 +80,6 @@ const panelExperimentation = function (data) {
         panel += `<div class="description">${data[HEADER_DESCRIPTION]}</div>`
     }
 
-    // TODO : un contact ou pas besoin ?
     panel += `</div>`
     return panel
 }
@@ -94,7 +90,7 @@ const parseCsvRow = function (results, parser) {
         L.marker([r.Latitude, r.Longitude], {
             title: `${r[HEADER_EXPERIMENTATEUR]} - ${r[HEADER_FREQUENCES]}`,
         })
-            .bindPopup(panelExperimentation(r))
+            .bindPopup(panelExperimentation(r), { maxWidth: "auto", })
             .addTo(map);
     }
 }
