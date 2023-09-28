@@ -30,7 +30,20 @@ const IMG_USAGES = {
     "Technique ou R&D": "", // TODO
     "Autre": "", // TODO
 }
+console.log(L.Icon.Default.prototype.options)
 
+const [blueIcon, goldIcon, redIcon] = ["blue", "gold", "red"].map(color => new L.Icon({
+    ...L.Icon.Default.prototype.options,
+    iconUrl: `https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-${color}.png`,
+    iconRetinaUrl: `https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-${color}.png`,
+    shadowUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png', // on ne peut pas utiliser celle du Icon.Default car pas URL complète
+}))
+
+const ICON_FREQUENCES = {
+    "26 GHz": blueIcon,
+    "2,6 GHz TDD": goldIcon,
+    "3,8 GHz": redIcon,
+}
 
 const panelExperimentation = function (data) {
     let panel = `<div class="details">`
@@ -90,6 +103,7 @@ const parseCsvRow = function (results, parser) {
     if (r.Latitude && r.Longitude && Number.isFinite(r.Latitude) && Number.isFinite(r.Longitude)) {
         L.marker([r.Latitude, r.Longitude], {
             title: `${r[HEADER_EXPERIMENTATEUR]} - ${r[HEADER_FREQUENCES]}`,
+            icon: ICON_FREQUENCES[r[HEADER_FREQUENCES]],
         })
             .bindPopup(panelExperimentation(r), { maxWidth: "auto", })
             .addTo(map);
