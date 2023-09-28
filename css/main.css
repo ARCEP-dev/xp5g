@@ -7,6 +7,14 @@
   min-width: 300px;
 }
 
+.usages {
+  padding-bottom: 1rem;
+}
+
+.usages li {
+  padding: 0 0.5rem;
+}
+
 .technos [title] {
   text-decoration: underline dotted;
 }

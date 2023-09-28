@@ -33,24 +33,29 @@ const IMG_USAGES = {
 
 
 const panelExperimentation = function (data) {
-    let panel = `<div class="details">
-        <h2>${data[HEADER_EXPERIMENTATEUR]}</h2>`
+    let panel = `<div class="details">`
 
     let usages = Object.entries(data)
         .filter(([k, v]) => k.startsWith(HEADER_USAGE_PREFIXE) && v)
         .reduce((acc, [k, v]) => {
             usage = k.substring(HEADER_USAGE_PREFIXE.length)
             image = IMG_USAGES[usage] || ''
-            return `${acc}<li class="list-group-item"><img src="${image}" alt="${usage}" title="${usage}" height="30px"></img></li > `
+            return `${acc}<li class="list-group-item border-0"><img src="${image}" alt="${usage}" title="${usage}" height="30px"></img></li > `
         }, "")
     if (usages) {
-        panel += `<ul class="usages list-group list-group-horizontal">${usages}</ul>`
+        panel += `<ul class="usages list-group list-group-horizontal float-end">${usages}</ul>`
+    }
+
+    panel += `<h2>${data[HEADER_EXPERIMENTATEUR]}</h2>`
+
+    if (data[HEADER_DESCRIPTION]) {
+        panel += `<div class="description">${data[HEADER_DESCRIPTION]}</div>`
     }
 
     panel += `<div class="table-responsive"><table class="table">`
     if (data[HEADER_DECISION_NUMERO]) {
         panel += `
-        <tr>
+        <tr class="border-top">
             <th>Décision d'autorisation de l'Arcep</th>
             <td>
                 ${data[HEADER_DECISION_LIEN] ? '<a href="' + data[HEADER_DECISION_LIEN] + '" target="_blank" title="Décision de l\'Arcep n°&nbsp;' + data[HEADER_DECISION_NUMERO] + ' (ouverture dans une nouvelle page)">' : ''}
@@ -75,10 +80,6 @@ const panelExperimentation = function (data) {
         panel += `<tr><th>Technologies testées</th><td class="technos">${technos}</td>`
     }
     panel += "</table>"
-
-    if (data[HEADER_DESCRIPTION]) {
-        panel += `<div class="description">${data[HEADER_DESCRIPTION]}</div>`
-    }
 
     panel += `</div>`
     return panel
