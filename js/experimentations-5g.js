@@ -30,7 +30,6 @@ const IMG_USAGES = {
     "Technique ou R&D": "", // TODO
     "Autre": "", // TODO
 }
-console.log(L.Icon.Default.prototype.options)
 
 const [blueIcon, goldIcon, redIcon] = ["blue", "gold", "red"].map(color => new L.Icon({
     ...L.Icon.Default.prototype.options,
