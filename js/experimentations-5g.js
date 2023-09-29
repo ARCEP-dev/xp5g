@@ -43,10 +43,10 @@ const [blueIcon, goldIcon, redIcon] = ["blue", "gold", "red"].map(color => new L
     shadowUrl: `${leafletRoot}/images/marker-shadow.png`, // on ne peut pas utiliser celle du Icon.Default car URL relative
 }))
 
-const ICON_FREQUENCES = {
-    "26 GHz": blueIcon,
-    "2,6 GHz TDD": goldIcon,
-    "3,8 GHz": redIcon,
+const FREQUENCES = {
+    "2,6 GHz TDD": { icon: goldIcon, },
+    "3,8 GHz": { icon: redIcon, },
+    "26 GHz": { icon: blueIcon, },
 }
 
 const panelExperimentation = function (data) {
@@ -105,22 +105,35 @@ const panelExperimentation = function (data) {
 const parseCsvRow = function (results, parser) {
     const r = results.data
     if (r.Latitude && r.Longitude && Number.isFinite(r.Latitude) && Number.isFinite(r.Longitude)) {
-        L.marker([r.Latitude, r.Longitude], {
+        const frequence = FREQUENCES[r[HEADER_FREQUENCES]]
+        marker = L.marker([r.Latitude, r.Longitude], {
             title: `${r[HEADER_EXPERIMENTATEUR]} - ${r[HEADER_FREQUENCES]}`,
-            icon: ICON_FREQUENCES[r[HEADER_FREQUENCES]],
+            icon: frequence.icon,
         })
             .bindPopup(panelExperimentation(r), { maxWidth: "auto", })
-            .addTo(map);
+            .addTo(frequence.layer)
     }
+}
+
+const onInputFrequence = function (event) {
+    const selected = event.target.value;
+    Object.values(FREQUENCES).forEach(({ layer }, idx) => {
+        if (!selected || selected == idx) {
+            layer.addTo(map);
+        } else {
+            layer.remove();
+        }
+    });
 }
 
 const populateForm = function () {
     // TODO vérifier qu'on n'a pas besoin de sélectionner plusieurs bandes de fréquences
     freq = document.getElementById("selectFrequences")
-    Object.keys(ICON_FREQUENCES).forEach((key, idx) => {
+    Object.keys(FREQUENCES).forEach((key, idx) => {
         const option = document.createElement("option")
         option.value = idx
         option.text = key
         freq.add(option)
     })
+    freq.addEventListener("input", onInputFrequence)
 }

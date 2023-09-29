@@ -56,10 +56,15 @@
     <script lang="js">
         let map = L.map('map', { attributionControl: false }).setView([47, 2], 6);
         L.control.attribution({ prefix: 'Leaflet' }).addTo(map);
+
         L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
             maxZoom: 19,
             attribution: '&copy; <a href="https://www.openstreetmap.org/copyright" target="_blank" title="les contributeurs OpenStreeMap">OpenStreetMap</a>',
-        }).addTo(map);
+        }).addTo(map)
+
+        Object.keys(FREQUENCES).forEach(f => {
+            FREQUENCES[f].layer = L.layerGroup().addTo(map);
+        })
 
         Papa.parse('https://object.files.data.gouv.fr/arcep/experimentations-5G/experimentations_5G.csv', { // TODO extraire l'URL
             header: true,
