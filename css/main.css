@@ -23,8 +23,7 @@
   src: url("EuclidFlex-Bold-WebS.woff") format("woff")
 }
 
-h1,
-h2 {
+#header h1 {
   color: #232253;
   font-family: EuclidFlex-Bold-WebS, sans-serif;
   font-weight: 400;
