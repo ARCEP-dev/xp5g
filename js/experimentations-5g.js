@@ -31,11 +31,16 @@ const IMG_USAGES = {
     "Autre": "", // TODO
 }
 
+leafletJs = document.getElementById("leaflet-js").src
+leafletRoot = leafletJs.substring(0, leafletJs.lastIndexOf('/'))
+
+LEAFLET_COLOR_MARKERS = "https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img"
+
 const [blueIcon, goldIcon, redIcon] = ["blue", "gold", "red"].map(color => new L.Icon({
     ...L.Icon.Default.prototype.options,
-    iconUrl: `https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-${color}.png`,
-    iconRetinaUrl: `https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-${color}.png`,
-    shadowUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png', // on ne peut pas utiliser celle du Icon.Default car pas URL complète
+    iconUrl: `${LEAFLET_COLOR_MARKERS}/marker-icon-${color}.png`,
+    iconRetinaUrl: `${LEAFLET_COLOR_MARKERS}/marker-icon-2x-${color}.png`,
+    shadowUrl: `${leafletRoot}/images/marker-shadow.png`, // on ne peut pas utiliser celle du Icon.Default car URL relative
 }))
 
 const ICON_FREQUENCES = {
@@ -47,11 +52,11 @@ const ICON_FREQUENCES = {
 const panelExperimentation = function (data) {
     let panel = `<div class="details">`
 
-    let usages = Object.entries(data)
+    const usages = Object.entries(data)
         .filter(([k, v]) => k.startsWith(HEADER_USAGE_PREFIXE) && v)
         .reduce((acc, [k, v]) => {
-            usage = k.substring(HEADER_USAGE_PREFIXE.length)
-            image = IMG_USAGES[usage] || ''
+            const usage = k.substring(HEADER_USAGE_PREFIXE.length)
+            const image = IMG_USAGES[usage] || ''
             return `${acc}<li class="list-group-item border-0"><img src="${image}" alt="${usage}" title="${usage}" height="30px"></img></li > `
         }, "")
     if (usages) {
@@ -80,7 +85,7 @@ const panelExperimentation = function (data) {
         panel += `<tr><th>${HEADER_FREQUENCES}</th><td>${data[HEADER_FREQUENCES]}</td>`
     }
 
-    let technos = Object.entries(data)
+    const technos = Object.entries(data)
         .filter(([k, v]) => k.startsWith(HEADER_TECHNO_PREFIXE) && v)
         .map(([k, v]) => {
             const libelle = k.substring(HEADER_TECHNO_PREFIXE.length)
