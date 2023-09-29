@@ -34,10 +34,22 @@
 
 <body class="d-flex flex-column" style="height: 100vh;">
 
-    <div id="header" class="d-flex align-items-center">
+    <div id="header" class="d-flex flex-wrap align-items-center">
         <img src="img/arcep.jpg" alt="Arcep" />
-        <h1 class="flex-grow-1">Expérimentations 5G</h1>
-        <div>Sélection</div>
+        <h1 class="flex-grow-1">
+            <span class="d-none d-sm-block">Expérimentations 5G</span>
+            <span class="d-sm-none"><abbr title="Expérimentations">Exp.</abbr> 5G</span>
+        </h1>
+        <form>
+            <div class="form-floating mx-2 my-1">
+                <select id="selectFrequences" class="form-select"
+                    aria-label="Sélection de la gamme de fréquences à afficher">
+                    <option value="" selected>Toutes</option>
+                    <!-- Les autres options seront alimentées en javascript -->
+                </select>
+                <label for="selectFrequences" class="form-label">Fréquences</label>
+            </div>
+        </form>
     </div>
     <div id="map" class="flex-fill"></div>
 
