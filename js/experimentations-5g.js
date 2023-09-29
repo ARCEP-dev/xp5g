@@ -113,3 +113,14 @@ const parseCsvRow = function (results, parser) {
             .addTo(map);
     }
 }
+
+const populateForm = function () {
+    // TODO vérifier qu'on n'a pas besoin de sélectionner plusieurs bandes de fréquences
+    freq = document.getElementById("selectFrequences")
+    Object.keys(ICON_FREQUENCES).forEach((key, idx) => {
+        const option = document.createElement("option")
+        option.value = idx
+        option.text = key
+        freq.add(option)
+    })
+}
