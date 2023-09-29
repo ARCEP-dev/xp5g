@@ -17,3 +17,16 @@
 .technos [title]:hover {
   cursor: help;
 }
+
+@font-face {
+  font-family: "EuclidFlex-Bold-WebS";
+  src: url("EuclidFlex-Bold-WebS.woff") format("woff")
+}
+
+h1,
+h2 {
+  color: #232253;
+  font-family: EuclidFlex-Bold-WebS, sans-serif;
+  font-weight: 400;
+  margin: 0 0.5rem;
+}
