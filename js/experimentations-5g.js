@@ -36,18 +36,21 @@ leafletRoot = leafletJs.substring(0, leafletJs.lastIndexOf('/'))
 
 LEAFLET_COLOR_MARKERS = "https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img"
 
-const [blueIcon, goldIcon, redIcon] = ["blue", "gold", "red"].map(color => new L.Icon({
-    ...L.Icon.Default.prototype.options,
-    iconUrl: `${LEAFLET_COLOR_MARKERS}/marker-icon-${color}.png`,
-    iconRetinaUrl: `${LEAFLET_COLOR_MARKERS}/marker-icon-2x-${color}.png`,
-    shadowUrl: `${leafletRoot}/images/marker-shadow.png`, // on ne peut pas utiliser celle du Icon.Default car URL relative
-}))
 
 const FREQUENCES = {
-    "2,6 GHz TDD": { icon: goldIcon, },
-    "3,8 GHz": { icon: redIcon, },
-    "26 GHz": { icon: blueIcon, },
+    "2,6 GHz TDD": { color: "gold", bgColor: "#f9e79f"},
+    "3,8 GHz": { color: "red", bgColor: "#f1948a"},
+    "26 GHz": { color: "blue", bgColor: "#aed6f1"},
 }
+
+Object.values(FREQUENCES).forEach(v => {
+    v.icon = new L.Icon({
+        ...L.Icon.Default.prototype.options,
+        iconUrl: `${LEAFLET_COLOR_MARKERS}/marker-icon-${v.color}.png`,
+        iconRetinaUrl: `${LEAFLET_COLOR_MARKERS}/marker-icon-2x-${v.color}.png`,
+        shadowUrl: `${leafletRoot}/images/marker-shadow.png`, // on ne peut pas utiliser celle du Icon.Default car URL relative
+    })
+})
 
 const panelExperimentation = function (data) {
     let panel = `<div class="details">`
@@ -129,10 +132,11 @@ const onInputFrequence = function (event) {
 const populateForm = function () {
     // TODO vérifier qu'on n'a pas besoin de sélectionner plusieurs bandes de fréquences
     freq = document.getElementById("selectFrequences")
-    Object.keys(FREQUENCES).forEach((key, idx) => {
+    Object.entries(FREQUENCES).forEach(([key, { bgColor }], idx) => {
         const option = document.createElement("option")
         option.value = idx
         option.text = key
+        option.style = `background-color: ${bgColor};`
         freq.add(option)
     })
     freq.addEventListener("input", onInputFrequence)
