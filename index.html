@@ -1,5 +1,5 @@
 <!doctype html>
-<html class="no-js" lang="fr-FR">
+<html lang="fr-FR">
 
 <head>
     <meta charset="utf-8">
@@ -32,9 +32,10 @@
     <script src="js/experimentations-5g.js"></script>
 </head>
 
-<body>
+<body class="d-flex flex-column" style="height: 100vh;">
 
-    <div id="map"></div>
+    <div id="header">Arcep</div>
+    <div id="map" class="flex-fill"></div>
 
     <script lang="js">
         let map = L.map('map', { attributionControl: false }).setView([47, 2], 6);
