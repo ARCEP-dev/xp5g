@@ -20,15 +20,15 @@ const TOOLTIP_TECHNOS = {
 }
 
 const IMG_USAGES = {
-    "Mobilité connectée": "https://arcep.fr/fileadmin/reprise/dossiers/thd-radio/Expes5G/pictos/Voitureconnectee.png",
-    "Internet des objets": "https://arcep.fr/fileadmin/reprise/dossiers/thd-radio/Expes5G/pictos/IoT.png",
-    "Ville intelligente": "https://arcep.fr/fileadmin/reprise/dossiers/thd-radio/Expes5G/pictos/Smartcity.png",
-    "Télémédecine": "https:/arcep.fr//fileadmin/reprise/dossiers/thd-radio/Expes5G/pictos/Medecine.png",
-    "Réalité virtuelle": "https://arcep.fr/fileadmin/reprise/dossiers/thd-radio/Expes5G/pictos/VR.png",
-    "Industrie du futur": "https://arcep.fr/fileadmin/reprise/dossiers/thd-radio/Expes5G/pictos/Industrie.png",
-    "Jeu Vidéo": "https://arcep.fr/fileadmin/reprise/dossiers/thd-radio/Expes5G/pictos/Jeuvideo.png",
-    "Technique ou R&D": "", // TODO
-    "Autre": "", // TODO
+    "Mobilité connectée": "img/voiture-connectee.png",
+    "Internet des objets": "img/iot.png",
+    "Ville intelligente": "img/smart-city.png",
+    "Télémédecine": "img/medecine.png",
+    "Réalité virtuelle": "img/vr.png",
+    "Industrie du futur": "img/industrie.png",
+    "Jeu Vidéo": "img/jeu-video.png",
+    "Technique ou R&D": "img/r-et-d.png",
+    "Autre": "img/autres.png",
 }
 
 leafletJs = document.getElementById("leaflet-js").src

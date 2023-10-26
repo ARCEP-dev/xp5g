@@ -29,7 +29,6 @@
     <script src="https://unpkg.com/bootstrap@5.3.2/dist/js/bootstrap.min.js"
         integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+"
         crossorigin="anonymous"></script>
-    <script src="js/experimentations-5g.js"></script>
 </head>
 
 <body class="d-flex flex-column" style="height: 100vh;">
@@ -53,6 +52,7 @@
     </div>
     <div id="map" class="flex-fill"></div>
 
+    <script src="js/experimentations-5g.js"></script>
     <script lang="js">
         let map = L.map('map', { attributionControl: false }).setView([47, 2], 6);
         L.control.attribution({ prefix: 'Leaflet' }).addTo(map);
@@ -61,7 +61,7 @@
             maxZoom: 19,
             attribution: '&copy; <a href="https://www.openstreetmap.org/copyright" target="_blank" title="les contributeurs OpenStreeMap">OpenStreetMap</a>',
         }).addTo(map)
-
+        
         Object.keys(FREQUENCES).forEach(f => {
             FREQUENCES[f].layer = L.layerGroup().addTo(map);
         })
