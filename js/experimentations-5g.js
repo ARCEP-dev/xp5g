@@ -38,9 +38,9 @@ LEAFLET_COLOR_MARKERS = "https://raw.githubusercontent.com/pointhi/leaflet-color
 
 
 const FREQUENCES = {
-    "2,6 GHz TDD": { color: "gold", bgColor: "#f9e79f"},
-    "3,8 GHz": { color: "red", bgColor: "#f1948a"},
-    "26 GHz": { color: "blue", bgColor: "#aed6f1"},
+    "2,6 GHz TDD": { color: "gold", bgColor: "#f9e79f" },
+    "3,8 GHz": { color: "red", bgColor: "#f1948a" },
+    "26 GHz": { color: "blue", bgColor: "#aed6f1" },
 }
 
 Object.values(FREQUENCES).forEach(v => {
@@ -105,9 +105,18 @@ const panelExperimentation = function (data) {
     return panel
 }
 
+const isGeoValid = (data) => data.Latitude && data.Longitude && Number.isFinite(data.Latitude) && Number.isFinite(data.Longitude)
+const isDateValid = (data) => {
+    debut = data["Début"] && new Date(data["Début"])
+    fin = data["Fin"] && new Date(data["Fin"])
+    today = new Date()
+    today.setHours(0, 0, 0, 0)
+    return (!debut || debut <= today) && (!fin || fin >= today)
+}
+
 const parseCsvRow = function (results, parser) {
     const r = results.data
-    if (r.Latitude && r.Longitude && Number.isFinite(r.Latitude) && Number.isFinite(r.Longitude)) {
+    if (results.errors.length == 0 && isGeoValid(r) && isDateValid(r)) {
         const frequence = FREQUENCES[r[HEADER_FREQUENCES]]
         marker = L.marker([r.Latitude, r.Longitude], {
             title: `${r[HEADER_EXPERIMENTATEUR]} - ${r[HEADER_FREQUENCES]}`,
@@ -115,6 +124,8 @@ const parseCsvRow = function (results, parser) {
         })
             .bindPopup(panelExperimentation(r), { maxWidth: "auto", })
             .addTo(frequence.layer)
+    } else {
+        console.debug(`Pas affiché (erreurs : ${results.errors.length} - geo: ${isGeoValid(r)} - date: ${isDateValid(r)})`, results)
     }
 }
 
@@ -130,7 +141,6 @@ const onInputFrequence = function (event) {
 }
 
 const populateForm = function () {
-    // TODO vérifier qu'on n'a pas besoin de sélectionner plusieurs bandes de fréquences
     freq = document.getElementById("selectFrequences")
     Object.entries(FREQUENCES).forEach(([key, { bgColor }], idx) => {
         const option = document.createElement("option")
