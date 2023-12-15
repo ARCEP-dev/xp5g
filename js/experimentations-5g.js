@@ -34,20 +34,20 @@ const IMG_USAGES = {
 leafletJs = document.getElementById("leaflet-js").src
 leafletRoot = leafletJs.substring(0, leafletJs.lastIndexOf('/'))
 
-LEAFLET_COLOR_MARKERS = "https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img"
-
 
 const FREQUENCES = {
     "2,6 GHz TDD": { color: "gold", bgColor: "#f9e79f" },
     "3,8 GHz": { color: "red", bgColor: "#f1948a" },
     "26 GHz": { color: "blue", bgColor: "#aed6f1" },
+    "Autres": { color: "green", bgColor: "#a5d69f" },
 }
 
 Object.values(FREQUENCES).forEach(v => {
     v.icon = new L.Icon({
         ...L.Icon.Default.prototype.options,
-        iconUrl: `${LEAFLET_COLOR_MARKERS}/marker-icon-${v.color}.png`,
-        iconRetinaUrl: `${LEAFLET_COLOR_MARKERS}/marker-icon-2x-${v.color}.png`,
+        // Les différentes icones de couleur doivent être importées depuis https://github.com/pointhi/leaflet-color-markers
+        iconUrl: `img/markers/marker-icon-${v.color}.png`,
+        iconRetinaUrl: `img/markers/marker-icon-2x-${v.color}.png`,
         shadowUrl: `${leafletRoot}/images/marker-shadow.png`, // on ne peut pas utiliser celle du Icon.Default car URL relative
     })
 })
