@@ -145,12 +145,16 @@ const onInputFrequence = function (event) {
 
 const populateForm = function () {
     freq = document.getElementById("selectFrequences")
+    total = 0
     Object.entries(FREQUENCES).forEach(([key, value], idx) => {
         const option = document.createElement("option")
         option.value = idx
-        option.text = `${key} (${value.count || 0})`
+        count = value.count || 0
+        option.text = `${key} (${count})`
         option.style = `background-color: ${value.bgColor};`
         freq.add(option)
+        total += count
     })
+    document.getElementById("toutesFrequences").text = `Toutes (${total})`
     freq.addEventListener("input", onInputFrequence)
 }
