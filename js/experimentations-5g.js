@@ -34,13 +34,13 @@ const IMG_USAGES = {
 leafletJs = document.getElementById("leaflet-js").src
 leafletRoot = leafletJs.substring(0, leafletJs.lastIndexOf('/'))
 
-const FREQUENCES_CATCHALL = "Autres"
 const FREQUENCES = {
     "2,6 GHz TDD": { color: "gold", bgColor: "#f9e79f" },
     "3,8 GHz": { color: "red", bgColor: "#f1948a" },
     "26 GHz": { color: "blue", bgColor: "#aed6f1" },
-    FREQUENCES_CATCHALL: { color: "green", bgColor: "#a5d69f" },
 }
+const FREQUENCES_CATCHALL = "Autres"
+FREQUENCES[FREQUENCES_CATCHALL] = { color: "green", bgColor: "#a5d69f" }
 
 Object.values(FREQUENCES).forEach(v => {
     v.icon = new L.Icon({
@@ -124,6 +124,7 @@ const parseCsvRow = function (results, parser) {
         })
             .bindPopup(panelExperimentation(r), { maxWidth: "auto", })
             .addTo(frequence.layer)
+        frequence.count = (frequence.count || 0) + 1
     } else {
         console.debug(`Pas affiché (erreurs : ${results.errors.length} - geo: ${isGeoValid(r)} - date: ${isDateValid(r)})`, results)
     }
@@ -142,11 +143,11 @@ const onInputFrequence = function (event) {
 
 const populateForm = function () {
     freq = document.getElementById("selectFrequences")
-    Object.entries(FREQUENCES).forEach(([key, { bgColor }], idx) => {
+    Object.entries(FREQUENCES).forEach(([key, value], idx) => {
         const option = document.createElement("option")
         option.value = idx
-        option.text = key
-        option.style = `background-color: ${bgColor};`
+        option.text = `${key} (${value.count || 0})`
+        option.style = `background-color: ${value.bgColor};`
         freq.add(option)
     })
     freq.addEventListener("input", onInputFrequence)
