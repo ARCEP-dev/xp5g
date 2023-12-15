@@ -1,5 +1,7 @@
 const HEADER_EXPERIMENTATEUR = "Expérimentateur"
-const HEADER_FREQUENCES = "Fréquences utilisées"
+const HEADER_FREQUENCES = "Bande de fréquences"
+const HEADER_FREQ_BASSE = "Fréquences attribuées (limite basse)"
+const HEADER_FREQ_HAUTE = "Fréquences attribuées (limite haute)"
 const HEADER_DECISION_NUMERO = "Numéro de la décision d'autorisation de l'Arcep"
 const HEADER_DECISION_LIEN = "Lien de la décision d'autorisation de l'Arcep"
 const HEADER_TECHNO_PREFIXE = "Techno - "
@@ -84,8 +86,8 @@ const panelExperimentation = function (data) {
             </td>
         </tr>`
     }
-    if (data[HEADER_FREQUENCES]) {
-        panel += `<tr><th>${HEADER_FREQUENCES}</th><td>${data[HEADER_FREQUENCES]}</td>`
+    if (data[HEADER_FREQ_BASSE] && data[HEADER_FREQ_HAUTE]) {
+        panel += `<tr><th>Fréquences attribuées</th><td>${data[HEADER_FREQ_BASSE]} – ${data[HEADER_FREQ_HAUTE]}</td>`
     }
 
     const technos = Object.entries(data)
