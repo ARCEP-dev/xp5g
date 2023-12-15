@@ -34,12 +34,12 @@ const IMG_USAGES = {
 leafletJs = document.getElementById("leaflet-js").src
 leafletRoot = leafletJs.substring(0, leafletJs.lastIndexOf('/'))
 
-
+const FREQUENCES_CATCHALL = "Autres"
 const FREQUENCES = {
     "2,6 GHz TDD": { color: "gold", bgColor: "#f9e79f" },
     "3,8 GHz": { color: "red", bgColor: "#f1948a" },
     "26 GHz": { color: "blue", bgColor: "#aed6f1" },
-    "Autres": { color: "green", bgColor: "#a5d69f" },
+    FREQUENCES_CATCHALL: { color: "green", bgColor: "#a5d69f" },
 }
 
 Object.values(FREQUENCES).forEach(v => {
@@ -117,7 +117,7 @@ const isDateValid = (data) => {
 const parseCsvRow = function (results, parser) {
     const r = results.data
     if (results.errors.length == 0 && isGeoValid(r) && isDateValid(r)) {
-        const frequence = FREQUENCES[r[HEADER_FREQUENCES]]
+        const frequence = FREQUENCES[r[HEADER_FREQUENCES]] || FREQUENCES[FREQUENCES_CATCHALL]
         marker = L.marker([r.Latitude, r.Longitude], {
             title: `${r[HEADER_EXPERIMENTATEUR]} - ${r[HEADER_FREQUENCES]}`,
             icon: frequence.icon,
