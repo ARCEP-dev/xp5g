@@ -67,16 +67,19 @@
         })
 
         const env = (new URLSearchParams(window.location.search)).get('env');
-
-        Papa.parse(`https://object.files.data.gouv.fr/arcep/experimentations_5g/${env ? env + '/' : ''}experimentations_5G.csv`, {
-            header: true,
-            download: true,
-            dynamicTyping: true,
-            skipEmptyLines: true,
-            step: parseCsvRow,
-            complete: populateForm,
-            encoding: "windows-1252",
-        });
+        fetch(`https://object.files.data.gouv.fr/arcep/experimentations_5g/${env ? env + '/' : ''}experimentations_5G.csv`)
+            .then(response => response.arrayBuffer())
+            .then(buffer => new TextDecoder("cp1252").decode(buffer))
+            .then(data =>
+                Papa.parse(data,
+                    {
+                        header: true,
+                        dynamicTyping: true,
+                        skipEmptyLines: true,
+                        step: parseCsvRow,
+                        complete: populateForm,
+                    })
+            );
 
     </script>
 
