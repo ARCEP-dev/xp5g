@@ -40,16 +40,19 @@
                 <span class="d-none d-sm-block">Expérimentations 5G</span>
                 <span class="d-sm-none"><abbr data-bs-toggle="tooltip" title="Expérimentations">Exp.</abbr> 5G</span>
             </h1>
-            <span id="source">
-                <span class="d-none d-sm-block">source :
-                    <a id="source-data-md" data-bs-toggle="tooltip" data-bs-placement="bottom"
-                        title="Données Arcep hébergées chez data.gouv.fr">données historiques</a> et
-                    <a id="source-doc-md" data-bs-toggle="tooltip" data-bs-placement="bottom"
-                        title="La page du jeu de données « expérimentations 5G » chez data.gouv.fr">documentation</a>
+            <div id="details">
+                <span id="source">
+                    <span class="d-none d-sm-inline">source :
+                        <a id="source-data-md" data-bs-toggle="tooltip" data-bs-placement="bottom"
+                            title="Télécharger les données Arcep hébergées chez data.gouv.fr">données historiques</a> et
+                        <a id="source-doc-md" data-bs-toggle="tooltip" data-bs-placement="bottom"
+                            title="Consulter la page du jeu de données « expérimentations 5G » chez data.gouv.fr">documentation</a>
+                    </span>
+                    <span class="d-sm-none"><a id="source-doc-sm" data-bs-toggle="tooltip" data-bs-placement="bottom"
+                            title="La page du jeu de données « expérimentations 5G » chez data.gouv.fr">source</a></span>
+                    <span id="date-maj"></span>
                 </span>
-                <span class="d-sm-none"><a id="source-doc-sm" data-bs-toggle="tooltip" data-bs-placement="bottom"
-                        title="La page du jeu de données « expérimentations 5G » chez data.gouv.fr">source</a></span>
-            </span>
+            </div>
         </div>
         <form>
             <div class="form-floating mx-2 my-1">
@@ -66,13 +69,34 @@
 
     <script src="js/experimentations-5g.js"></script>
     <script lang="js">
-        const env = (new URLSearchParams(window.location.search)).get('env');
-        const urlData = `https://object.files.data.gouv.fr/arcep/experimentations_5g/${env ? env + '/' : ''}experimentations_5G.csv`;
-        const urlDoc = `https://${env ? 'demo' : 'www'}.data.gouv.fr/fr/admin/dataset/65b239a4a6929285a8262d83`
+        const ID_DATASET = "65b239a4a6929285a8262d83";
+        const ID_RESOURCE = "44fa2428-692a-4332-898f-0dc3fa0017c7";
 
+        const env = (new URLSearchParams(window.location.search)).get('env');
+        const host = `https://${env ? 'demo' : 'www'}.data.gouv.fr`
+
+        // TODO à remplacer par const urlData = `${host}/fr/datasets/r/44fa2428-692a-4332-898f-0dc3fa0017c7`;
+        const urlData = `https://object.files.data.gouv.fr/arcep/experimentations_5g/${env ? env + '/' : ''}experimentations_5G.csv`;
+        const urlDoc = `${host}/fr/admin/dataset/${ID_DATASET}`
         document.getElementById("source-data-md").setAttribute("href", urlData);
         document.getElementById("source-doc-md").setAttribute("href", urlDoc);
         document.getElementById("source-doc-sm").setAttribute("href", urlDoc);
+
+        // TODO à remplacer par const urlApiResource = `${host}/api/1/datasets/${ID_DATASET}/resources/${ID_RESOURCE}/`
+        const urlApiResource = `${host}/api/1/datasets/65007851ff1ee4659f3b384c/resources/174b237c-20f4-435e-8fee-b0b9ab717338/`
+        fetch(urlApiResource)
+            .then(response => response.json())
+            .then(data => {
+                dateMaj = new Date(data.last_modified)
+                longDate = new Intl.DateTimeFormat("fr-FR", { dateStyle: "full" })
+                shortDate = new Intl.DateTimeFormat("fr-FR", { dateStyle: "short" })
+                shortTime = new Intl.DateTimeFormat("fr-FR", { timeStyle: "short" })
+                if (dateMaj) {
+                    title = `Les données ont été mises à jour le ${longDate.format(dateMaj)} à ${shortTime.format(dateMaj)}`
+                    document.getElementById("date-maj").innerHTML = `
+                        (<span class="d-none d-sm-inline" data-bs-toggle="tooltip" title="${title}">maj le ${shortDate.format(dateMaj)}</span><span class="d-sm-none" data-bs-toggle="tooltip" title="${title}">${shortDate.format(dateMaj)}</span>)`
+                }
+            }).then(activateTooltips)
 
         let map = L.map('map', { attributionControl: false }).setView([47, 2], 6);
         L.control.attribution({ prefix: 'Leaflet' }).addTo(map);
@@ -85,7 +109,6 @@
         Object.keys(FREQUENCES).forEach(f => {
             FREQUENCES[f].layer = L.layerGroup().addTo(map);
         })
-
 
         fetch(urlData)
             .then(response => response.arrayBuffer())
@@ -100,7 +123,7 @@
                         complete: onParsingFinished,
                     })
             );
-        
+
         map.on('popupopen autopanstart', activateTooltips)
 
     </script>

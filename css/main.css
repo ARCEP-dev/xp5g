@@ -32,17 +32,17 @@
 }
 
 #header h1,
-#source {
+#details {
   margin: 0 0.1rem 0 0;
 }
 
-#source {
-  font-size: 75%;
+#details {
+  font-size: 70%;
   font-style: italic;
 }
-#source, #source a {
+#details, #details a {
   color: darkgrey;
 }
-#source a:visited {
+#details a:visited {
   color: grey;
 }
