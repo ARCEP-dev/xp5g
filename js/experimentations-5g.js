@@ -62,7 +62,7 @@ const panelExperimentation = function (data) {
         .reduce((acc, [k, v]) => {
             const usage = k.substring(HEADER_USAGE_PREFIXE.length)
             const image = IMG_USAGES[usage] || ''
-            return `${acc}<li class="list-group-item border-0"><img src="${image}" alt="${usage}" title="${usage}" height="30px"></img></li > `
+            return `${acc}<li class="list-group-item border-0"><img src="${image}" alt="${usage}" data-bs-toggle="tooltip" title="${usage}" height="30px"></img></li > `
         }, "")
     if (usages) {
         panel += `<ul class="usages list-group list-group-horizontal float-end">${usages}</ul>`
@@ -80,7 +80,7 @@ const panelExperimentation = function (data) {
         <tr class="border-top">
             <th>Décision d'autorisation de l'Arcep</th>
             <td>
-                ${data[HEADER_DECISION_LIEN] ? '<a href="' + data[HEADER_DECISION_LIEN] + '" target="_blank" title="Décision de l\'Arcep n°&nbsp;' + data[HEADER_DECISION_NUMERO] + ' (ouverture dans une nouvelle page)">' : ''}
+                ${data[HEADER_DECISION_LIEN] ? '<a href="' + data[HEADER_DECISION_LIEN] + '" target="_blank" data-bs-toggle="tooltip" title="Décision de l\'Arcep n°&nbsp;' + data[HEADER_DECISION_NUMERO] + ' (ouverture dans une nouvelle page)">' : ''}
                 ${data[HEADER_DECISION_NUMERO]}
                 ${data[HEADER_DECISION_LIEN] ? '</a>' : ''}
             </td>
@@ -94,7 +94,7 @@ const panelExperimentation = function (data) {
         .filter(([k, v]) => k.startsWith(HEADER_TECHNO_PREFIXE) && v)
         .map(([k, v]) => {
             const libelle = k.substring(HEADER_TECHNO_PREFIXE.length)
-            const title = libelle in TOOLTIP_TECHNOS ? ` title="${TOOLTIP_TECHNOS[libelle]}"` : ''
+            const title = libelle in TOOLTIP_TECHNOS ? ` data-bs-toggle="tooltip" title="${TOOLTIP_TECHNOS[libelle]}"` : ''
             return `<span${title}>${libelle}</span>` // TODO essayer d'activer les tooltips Bootstrap ?
         })
         .join(', ')
@@ -143,7 +143,15 @@ const onInputFrequence = function (event) {
     });
 }
 
-const populateForm = function () {
+const activateTooltips = function() {
+    const tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+    const tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+        return new bootstrap.Tooltip(tooltipTriggerEl)
+    })
+}
+
+const onParsingFinished = function () {
+    // Remplir le formulaire de sélection de la bande de fréquences
     freq = document.getElementById("selectFrequences")
     total = 0
     Object.entries(FREQUENCES).forEach(([key, value], idx) => {
@@ -157,4 +165,7 @@ const populateForm = function () {
     })
     document.getElementById("toutesFrequences").text = `Toutes (${total})`
     freq.addEventListener("input", onInputFrequence)
+
+    // activer les tooltips bootstrap https://getbootstrap.com/docs/5.0/components/tooltips/
+    activateTooltips()
 }

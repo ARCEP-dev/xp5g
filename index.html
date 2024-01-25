@@ -26,8 +26,8 @@
     <script src="https://unpkg.com/papaparse@5.4.1/papaparse.min.js"
         integrity="sha384-D/t0ZMqQW31H3az8ktEiNb39wyKnS82iFY52QPACM+IjKW3jDUhyIgh2PApRqJZs"
         crossorigin="anonymous"></script>
-    <script src="https://unpkg.com/bootstrap@5.3.2/dist/js/bootstrap.min.js"
-        integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+"
+    <script src="https://unpkg.com/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
         crossorigin="anonymous"></script>
 </head>
 
@@ -38,15 +38,16 @@
         <div class="flex-grow-1 d-flex flex-column">
             <h1>
                 <span class="d-none d-sm-block">Expérimentations 5G</span>
-                <span class="d-sm-none"><abbr title="Expérimentations">Exp.</abbr> 5G</span>
+                <span class="d-sm-none"><abbr data-bs-toggle="tooltip" title="Expérimentations">Exp.</abbr> 5G</span>
             </h1>
             <span id="source">
                 <span class="d-none d-sm-block">source :
-                    <a id="source-data-md" title="Données Arcep hébergées chez data.gouv.fr">données historiques</a> et
-                    <a id="source-doc-md"
+                    <a id="source-data-md" data-bs-toggle="tooltip" data-bs-placement="bottom"
+                        title="Données Arcep hébergées chez data.gouv.fr">données historiques</a> et
+                    <a id="source-doc-md" data-bs-toggle="tooltip" data-bs-placement="bottom"
                         title="La page du jeu de données « expérimentations 5G » chez data.gouv.fr">documentation</a>
                 </span>
-                <span class="d-sm-none"><a id="source-doc-sm"
+                <span class="d-sm-none"><a id="source-doc-sm" data-bs-toggle="tooltip" data-bs-placement="bottom"
                         title="La page du jeu de données « expérimentations 5G » chez data.gouv.fr">source</a></span>
             </span>
         </div>
@@ -78,7 +79,7 @@
 
         L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
             maxZoom: 19,
-            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright" target="_blank" title="les contributeurs OpenStreeMap">OpenStreetMap</a>',
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright" target="_blank" data-bs-toggle="tooltip" title="les contributeurs OpenStreeMap">OpenStreetMap</a>',
         }).addTo(map)
 
         Object.keys(FREQUENCES).forEach(f => {
@@ -96,9 +97,11 @@
                         dynamicTyping: true,
                         skipEmptyLines: true,
                         step: parseCsvRow,
-                        complete: populateForm,
+                        complete: onParsingFinished,
                     })
             );
+        
+        map.on('popupopen autopanstart', activateTooltips)
 
     </script>
 
