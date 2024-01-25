@@ -35,10 +35,21 @@
 
     <div id="header" class="d-flex flex-wrap align-items-center">
         <img src="img/arcep.jpg" alt="Arcep" />
-        <h1 class="flex-grow-1">
-            <span class="d-none d-sm-block">Expérimentations 5G</span>
-            <span class="d-sm-none"><abbr title="Expérimentations">Exp.</abbr> 5G</span>
-        </h1>
+        <div class="flex-grow-1 d-flex flex-column">
+            <h1>
+                <span class="d-none d-sm-block">Expérimentations 5G</span>
+                <span class="d-sm-none"><abbr title="Expérimentations">Exp.</abbr> 5G</span>
+            </h1>
+            <span id="source">
+                <span class="d-none d-sm-block">source :
+                    <a id="source-data-md" title="Données Arcep hébergées chez data.gouv.fr">données historiques</a> et
+                    <a id="source-doc-md"
+                        title="La page du jeu de données « expérimentations 5G » chez data.gouv.fr">documentation</a>
+                </span>
+                <span class="d-sm-none"><a id="source-doc-sm"
+                        title="La page du jeu de données « expérimentations 5G » chez data.gouv.fr">source</a></span>
+            </span>
+        </div>
         <form>
             <div class="form-floating mx-2 my-1">
                 <select id="selectFrequences" class="form-select"
@@ -54,6 +65,14 @@
 
     <script src="js/experimentations-5g.js"></script>
     <script lang="js">
+        const env = (new URLSearchParams(window.location.search)).get('env');
+        const urlData = `https://object.files.data.gouv.fr/arcep/experimentations_5g/${env ? env + '/' : ''}experimentations_5G.csv`;
+        const urlDoc = `https://${env ? 'demo' : 'www'}.data.gouv.fr/fr/admin/dataset/65b239a4a6929285a8262d83`
+
+        document.getElementById("source-data-md").setAttribute("href", urlData);
+        document.getElementById("source-doc-md").setAttribute("href", urlDoc);
+        document.getElementById("source-doc-sm").setAttribute("href", urlDoc);
+
         let map = L.map('map', { attributionControl: false }).setView([47, 2], 6);
         L.control.attribution({ prefix: 'Leaflet' }).addTo(map);
 
@@ -66,8 +85,8 @@
             FREQUENCES[f].layer = L.layerGroup().addTo(map);
         })
 
-        const env = (new URLSearchParams(window.location.search)).get('env');
-        fetch(`https://object.files.data.gouv.fr/arcep/experimentations_5g/${env ? env + '/' : ''}experimentations_5G.csv`)
+
+        fetch(urlData)
             .then(response => response.arrayBuffer())
             .then(buffer => new TextDecoder("cp1252").decode(buffer))
             .then(data =>

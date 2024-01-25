@@ -23,9 +23,26 @@
   src: url("EuclidFlex-Bold-WebS.woff") format("woff")
 }
 
+
 #header h1 {
   color: #232253;
   font-family: EuclidFlex-Bold-WebS, sans-serif;
+  font-size: 150%;
   font-weight: 400;
-  margin: 0 0.5rem;
+}
+
+#header h1,
+#source {
+  margin: 0 0.1rem 0 0;
+}
+
+#source {
+  font-size: 75%;
+  font-style: italic;
+}
+#source, #source a {
+  color: darkgrey;
+}
+#source a:visited {
+  color: grey;
 }
