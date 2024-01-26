@@ -82,7 +82,7 @@ const panelExperimentation = function (data) {
         <tr class="border-top">
             <th>Décision d'autorisation de l'Arcep</th>
             <td>
-                ${data[HEADER_DECISION_LIEN] ? '<a href="' + data[HEADER_DECISION_LIEN] + '" target="_blank" data-bs-toggle="tooltip" title="Décision de l\'Arcep n°&nbsp;' + data[HEADER_DECISION_NUMERO] + ' (ouverture dans une nouvelle page)">' : ''}
+                ${data[HEADER_DECISION_LIEN] ? '<a href="' + data[HEADER_DECISION_LIEN] + '" target="_blank" data-bs-toggle="tooltip" title="Décision de l\'Arcep n° ' + data[HEADER_DECISION_NUMERO] + ' (ouverture dans une nouvelle page)">' : ''}
                 ${data[HEADER_DECISION_NUMERO]}
                 ${data[HEADER_DECISION_LIEN] ? '</a>' : ''}
             </td>
