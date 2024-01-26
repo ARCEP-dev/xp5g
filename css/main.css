@@ -46,3 +46,9 @@
 #details a:visited {
   color: grey;
 }
+
+.marker path {
+  stroke: white;
+  stroke-width: 2px;
+  stroke-linejoin: round;
+}

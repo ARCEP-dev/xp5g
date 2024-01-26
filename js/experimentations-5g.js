@@ -37,20 +37,22 @@ leafletJs = document.getElementById("leaflet-js").src
 leafletRoot = leafletJs.substring(0, leafletJs.lastIndexOf('/'))
 
 const FREQUENCES = {
-    "2,6 GHz TDD": { color: "gold", bgColor: "#f9e79f" },
-    "3,8 GHz": { color: "red", bgColor: "#f1948a" },
-    "26 GHz": { color: "blue", bgColor: "#aed6f1" },
+    "2,6 GHz TDD": { color: "#232253", bgColor: "#232253" },
+    "3,8 GHz": { color: "#ee5557", bgColor: "#ee5557" },
+    "26 GHz": { color: "#6561a8", bgColor: "#6561a8" },
 }
 const FREQUENCES_CATCHALL = "Autres"
-FREQUENCES[FREQUENCES_CATCHALL] = { color: "green", bgColor: "#a5d69f" }
+FREQUENCES[FREQUENCES_CATCHALL] = { color: "#5ac5cd", bgColor: "#5ac5cd" }
 
 Object.values(FREQUENCES).forEach(v => {
-    v.icon = new L.Icon({
-        ...L.Icon.Default.prototype.options,
-        // Les différentes icones de couleur doivent être importées depuis https://github.com/pointhi/leaflet-color-markers
-        iconUrl: `img/markers/marker-icon-${v.color}.png`,
-        iconRetinaUrl: `img/markers/marker-icon-2x-${v.color}.png`,
-        shadowUrl: `${leafletRoot}/images/marker-shadow.png`, // on ne peut pas utiliser celle du Icon.Default car URL relative
+    v.icon = new L.divIcon({
+        // source : https://icons.getbootstrap.com/icons/geo-alt-fill/
+        html: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" fill="${v.color}" class="bi bi-geo-alt-fill">
+        <path d="M 16,32 C 16,32 28,20.628 28,12 A 12,12 0 0 0 4,12 c 0,8.628 12,20 12,20 m 0,-14 a 6,6 0 1 1 0,-12 6,6 0 0 1 0,12"/>
+        </svg>`,
+        iconSize: [32, 32],
+        iconAnchor: [16, 32],
+        className: "marker",
     })
 })
 
@@ -143,7 +145,7 @@ const onInputFrequence = function (event) {
     });
 }
 
-const activateTooltips = function() {
+const activateTooltips = function () {
     const tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
     const tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
         return new bootstrap.Tooltip(tooltipTriggerEl)
@@ -159,7 +161,7 @@ const onParsingFinished = function () {
         option.value = idx
         count = value.count || 0
         option.text = `${key} (${count})`
-        option.style = `background-color: ${value.bgColor};`
+        option.style = `background-color: ${value.bgColor}; color: white;`
         freq.add(option)
         total += count
     })
