@@ -22,15 +22,15 @@ const TOOLTIP_TECHNOS = {
 }
 
 const IMG_USAGES = {
-    "Mobilité connectée": "img/voiture-connectee.png",
-    "Internet des objets": "img/iot.png",
-    "Ville intelligente": "img/smart-city.png",
-    "Télémédecine": "img/medecine.png",
-    "Réalité virtuelle": "img/vr.png",
-    "Industrie du futur": "img/industrie.png",
-    "Jeu Vidéo": "img/jeu-video.png",
-    "Technique ou R&D": "img/r-et-d.png",
-    "Autre": "img/autres.png",
+    "Mobilité connectée": "img/usages/voiture-connectee.png",
+    "Internet des objets": "img/usages/iot.png",
+    "Ville intelligente": "img/usages/smart-city.png",
+    "Télémédecine": "img/usages/medecine.png",
+    "Réalité virtuelle": "img/usages/vr.png",
+    "Industrie du futur": "img/usages/industrie.png",
+    "Jeu Vidéo": "img/usages/jeu-video.png",
+    "Technique ou R&D": "img/usages/r-et-d.png",
+    "Autre": "img/usages/autres.png",
 }
 
 leafletJs = document.getElementById("leaflet-js").src
