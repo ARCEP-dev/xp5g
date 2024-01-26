@@ -75,7 +75,7 @@
         const env = (new URLSearchParams(window.location.search)).get('env');
         const host = `https://${env ? 'demo' : 'www'}.data.gouv.fr`
 
-        // TODO à remplacer par const urlData = `${host}/fr/datasets/r/44fa2428-692a-4332-898f-0dc3fa0017c7`;
+        // TODO à remplacer par const urlData = `${host}/fr/datasets/r/${ID_RESOURCE}`;
         const urlData = `https://object.files.data.gouv.fr/arcep/experimentations_5g/${env ? env + '/' : ''}experimentations_5G.csv`;
         const urlDoc = `${host}/fr/admin/dataset/${ID_DATASET}`
         document.getElementById("source-data-md").setAttribute("href", urlData);
@@ -87,7 +87,7 @@
         fetch(urlApiResource)
             .then(response => response.json())
             .then(data => {
-                dateMaj = new Date(data.last_modified)
+                dateMaj = new Date(data.internal.last_modified_internal)
                 longDate = new Intl.DateTimeFormat("fr-FR", { dateStyle: "full" })
                 shortDate = new Intl.DateTimeFormat("fr-FR", { dateStyle: "short" })
                 shortTime = new Intl.DateTimeFormat("fr-FR", { timeStyle: "short" })
