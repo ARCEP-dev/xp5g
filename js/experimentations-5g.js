@@ -56,6 +56,10 @@ Object.values(FREQUENCES).forEach(v => {
     })
 })
 
+const REGEXP_01_LI = /  -\s*(.*?)(?=  |$)/g;
+const REGEXP_02_UL = /<li>(?:(?!  ).)+<\/li>/g;
+const REGEXP_03_P = / {2,}/g
+
 const panelExperimentation = function (data) {
     let panel = `<div class="details">`
 
@@ -73,7 +77,18 @@ const panelExperimentation = function (data) {
     panel += `<h2>${data[HEADER_EXPERIMENTATEUR]}</h2>`
 
     if (data[HEADER_DESCRIPTION]) {
-        panel += `<div class="description">${data[HEADER_DESCRIPTION]}</div>`
+        htmlDescription = data[HEADER_DESCRIPTION]
+            .trim()
+            .replaceAll(REGEXP_01_LI, "<li>$1</li>")
+            .replaceAll(REGEXP_02_UL, "<ul>$1</ul>")
+            .replaceAll(REGEXP_03_P, "</p><p>")
+        if (!htmlDescription.startsWith("<")) {
+            htmlDescription = "<p>" + htmlDescription
+        }
+        if (!htmlDescription.endsWith(">")) {
+            htmlDescription += "</p>"
+        }
+        panel += `<div class="description">${htmlDescription}</div>`
     }
 
     panel += `<div class="table-responsive"><table class="table">`
