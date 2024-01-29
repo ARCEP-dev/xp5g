@@ -117,7 +117,7 @@
         }).addTo(map)
 
         clusters = L.markerClusterGroup({
-            maxClusterRadius: 0,
+            maxClusterRadius: 5,
         });
         Object.keys(FREQUENCES).forEach(f => {
             var sousGroupe = L.featureGroup.subGroup(clusters);
