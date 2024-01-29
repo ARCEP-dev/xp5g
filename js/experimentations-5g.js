@@ -138,9 +138,9 @@ const onInputFrequence = function (event) {
     const selected = event.target.value;
     Object.values(FREQUENCES).forEach(({ layer }, idx) => {
         if (!selected || selected == idx) {
-            layer.addTo(map);
+            clusters.addLayer(layer)
         } else {
-            layer.remove();
+            clusters.removeLayer(layer)
         }
     });
 }
