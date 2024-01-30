@@ -1,4 +1,4 @@
-# xp5g
+# Cartographie des expérimentations 5G déclarées à l'Arcep
 
 Affiche les données publiques d'expérimentations 5G (publiées [en Open Data](https://www.data.gouv.fr/fr/datasets/65b239a4a6929285a8262d83/)) sur
 une carte interactive en ligne.
