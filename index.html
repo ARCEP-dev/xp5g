@@ -79,21 +79,18 @@
 
     <script src="js/experimentations-5g.js"></script>
     <script lang="js">
-        const ID_DATASET = "65b239a4a6929285a8262d83";
-        const ID_RESOURCE = "44fa2428-692a-4332-898f-0dc3fa0017c7";
-
         const env = (new URLSearchParams(window.location.search)).get('env');
         const host = `https://${env ? 'demo' : 'www'}.data.gouv.fr`
+        const ID_DATASET = env == "test" ? "65007851ff1ee4659f3b384c" : "65b239a4a6929285a8262d83";
+        const ID_RESOURCE = env == "test" ? "174b237c-20f4-435e-8fee-b0b9ab717338" : "44fa2428-692a-4332-898f-0dc3fa0017c7";
 
-        // TODO à remplacer par const urlData = `${host}/fr/datasets/r/${ID_RESOURCE}`;
-        const urlData = `https://object.files.data.gouv.fr/arcep/experimentations_5g/${env ? env + '/' : ''}experimentations_5G.csv`;
-        const urlDoc = `${host}/fr/admin/dataset/${ID_DATASET}`
+        const urlData = `${host}/fr/datasets/r/${ID_RESOURCE}`;
+        const urlDoc = `${host}/fr/dataset/${ID_DATASET}`
         document.getElementById("source-data-md").setAttribute("href", urlData);
         document.getElementById("source-doc-md").setAttribute("href", urlDoc);
         document.getElementById("source-doc-sm").setAttribute("href", urlDoc);
 
-        // TODO à remplacer par const urlApiResource = `${host}/api/1/datasets/${ID_DATASET}/resources/${ID_RESOURCE}/`
-        const urlApiResource = `${host}/api/1/datasets/65007851ff1ee4659f3b384c/resources/174b237c-20f4-435e-8fee-b0b9ab717338/`
+        const urlApiResource = `${host}/api/1/datasets/${ID_DATASET}/resources/${ID_RESOURCE}/`
         fetch(urlApiResource)
             .then(response => response.json())
             .then(data => {
