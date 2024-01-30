@@ -1,17 +1,12 @@
-# Site web cartographique
+# Cartographie des expérimentations 5G déclarées à l'Arcep
 
-Affiche les données publiques d'expérimentations 5G (publiées [via un pipeline](https://gitlab.arcep.fr/uft/carto-xp-5g/data-pipeline)) sur
+Affiche les données publiques d'expérimentations 5G (publiées [en Open Data](https://www.data.gouv.fr/fr/datasets/65b239a4a6929285a8262d83/)) sur
 une carte interactive en ligne.
 
 ## Interlocuteurs
 
-- Métier : Denis CATINOT pour DMI/UFT
-- Technique : Laurent COTTEREAU (@lcottereau) pour DIU/URD
-
-## Environnements
-
-- production : à venir…
-- développement : on peut utiliser [les données de l'open data de dev](https://demo.data.gouv.fr/fr/datasets/65007851ff1ee4659f3b384c/)
+- Métier : l'unité [DMI/UFT](https://www.arcep.fr/la-regulation/grands-dossiers-reseaux-mobiles/la-5g.html) de l'Arcep
+- Technique : l'unité [DIU/URD](https://www.arcep.fr/la-regulation/grands-dossiers-thematiques-transverses/la-regulation-par-la-data.html) de l'Arcep
 
 ## Développement
 
