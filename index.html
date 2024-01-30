@@ -1,0 +1,149 @@
+<!doctype html>
+<html lang="fr-FR">
+
+<head>
+    <meta charset="utf-8">
+    <title>Carte des expérimentations 5G&nbsp;&mdash Arcep</title>
+    <meta name="description"
+        content="Pour permettre à l'ensemble des acteurs innovants, industriels et acteurs « verticaux » de s'approprier les technologies liées à la 5G ainsi que les nouveaux cas d'usage qu'elle permet, et bénéficier de retours d'expérience variés, l'Arcep a ouvert deux guichets d'expérimentations, l'un en bande 3,8 - 4,0 GHz et l'autre en bande 26 GHz. Ils permettent aux acteurs intéressés de faire des demandes à l'Arcep d'autorisations d'utilisation de fréquences dans un cadre plus souple, à titre transitoire et dans la limite de leur disponibilité. Cette carte présente de manière synthétique les expérimentations en cours ou achevées">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <meta property="og:title" content="Carte des expérimentations 5G&nbsp;&mdash Arcep">
+    <meta property="og:type" content="website">
+    <meta property="og:image"
+        content="https://www.arcep.fr/typo3conf/ext/site/Resources/Public/Frontend/images/arcep-share-1200x630.jpg">
+
+    <link rel="stylesheet" href="https://unpkg.com/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <link rel="stylesheet" href="css/main.css">
+
+    <meta name="theme-color" content="#fafafa">
+
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+        integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+    <script id="leaflet-js" src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+        integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+    <script src="https://unpkg.com/papaparse@5.4.1/papaparse.min.js"
+        integrity="sha384-D/t0ZMqQW31H3az8ktEiNb39wyKnS82iFY52QPACM+IjKW3jDUhyIgh2PApRqJZs"
+        crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+        crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.4.1/dist/MarkerCluster.css"
+        integrity="sha384-lPzjPsFQL6te2x+VxmV6q1DpRxpRk0tmnl2cpwAO5y04ESyc752tnEWPKDfl1olr" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.4.1/dist/MarkerCluster.Default.css"
+        integrity="sha384-5kMSQJ6S4Qj5i09mtMNrWpSi8iXw230pKU76xTmrpezGnNJQzj0NzXjQLLg+jE7k" crossorigin="anonymous">
+    <script src="https://unpkg.com/leaflet.markercluster@1.4.1/dist/leaflet.markercluster.js"
+        integrity="sha384-RLIyj5q1b5XJTn0tqUhucRZe40nFTocRP91R/NkRJHwAe4XxnTV77FXy/vGLiec2"
+        crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/leaflet.featuregroup.subgroup@1.0.2/dist/leaflet.featuregroup.subgroup.js"
+        integrity="sha384-c1aAsSPuTg7IybBHA8KbsqNyijjJCAMtN/nHf12//+LzH8hlDyOqxbF9kFDuM7Ou"
+        crossorigin="anonymous"></script>
+</head>
+
+<body class="d-flex flex-column" style="height: 100vh;">
+
+    <div id="header" class="d-flex flex-wrap align-items-center">
+        <img src="img/arcep.jpg" alt="Arcep" />
+        <div class="flex-grow-1 d-flex flex-column">
+            <h1>
+                <span class="d-none d-sm-block">Expérimentations 5G</span>
+                <span class="d-sm-none"><abbr data-bs-toggle="tooltip" title="Expérimentations">Exp.</abbr> 5G</span>
+            </h1>
+            <div id="details">
+                <span id="source">
+                    <span class="d-none d-sm-inline">source :
+                        <a id="source-data-md" data-bs-toggle="tooltip" data-bs-placement="bottom"
+                            title="Télécharger les données Arcep hébergées chez data.gouv.fr">données historiques</a> et
+                        <a id="source-doc-md" data-bs-toggle="tooltip" data-bs-placement="bottom"
+                            title="Consulter la page du jeu de données « expérimentations 5G » chez data.gouv.fr">documentation</a>
+                    </span>
+                    <span class="d-sm-none"><a id="source-doc-sm" data-bs-toggle="tooltip" data-bs-placement="bottom"
+                            title="La page du jeu de données « expérimentations 5G » chez data.gouv.fr">source</a></span>
+                    <span id="date-maj"></span>
+                </span>
+            </div>
+        </div>
+        <form>
+            <div class="form-floating mx-2 my-1">
+                <select id="selectFrequences" class="form-select"
+                    aria-label="Sélection de la gamme de fréquences à afficher">
+                    <option id="toutesFrequences" value="" selected>Toutes</option>
+                    <!-- Les autres options seront alimentées en javascript -->
+                </select>
+                <label for="selectFrequences" class="form-label">Fréquences</label>
+            </div>
+        </form>
+    </div>
+    <div id="map" class="flex-fill"></div>
+
+    <script src="js/experimentations-5g.js"></script>
+    <script lang="js">
+        const ID_DATASET = "65b239a4a6929285a8262d83";
+        const ID_RESOURCE = "44fa2428-692a-4332-898f-0dc3fa0017c7";
+
+        const env = (new URLSearchParams(window.location.search)).get('env');
+        const host = `https://${env ? 'demo' : 'www'}.data.gouv.fr`
+
+        // TODO à remplacer par const urlData = `${host}/fr/datasets/r/${ID_RESOURCE}`;
+        const urlData = `https://object.files.data.gouv.fr/arcep/experimentations_5g/${env ? env + '/' : ''}experimentations_5G.csv`;
+        const urlDoc = `${host}/fr/admin/dataset/${ID_DATASET}`
+        document.getElementById("source-data-md").setAttribute("href", urlData);
+        document.getElementById("source-doc-md").setAttribute("href", urlDoc);
+        document.getElementById("source-doc-sm").setAttribute("href", urlDoc);
+
+        // TODO à remplacer par const urlApiResource = `${host}/api/1/datasets/${ID_DATASET}/resources/${ID_RESOURCE}/`
+        const urlApiResource = `${host}/api/1/datasets/65007851ff1ee4659f3b384c/resources/174b237c-20f4-435e-8fee-b0b9ab717338/`
+        fetch(urlApiResource)
+            .then(response => response.json())
+            .then(data => {
+                dateMaj = new Date(data.internal.last_modified_internal)
+                longDate = new Intl.DateTimeFormat("fr-FR", { dateStyle: "full" })
+                shortDate = new Intl.DateTimeFormat("fr-FR", { dateStyle: "short" })
+                shortTime = new Intl.DateTimeFormat("fr-FR", { timeStyle: "short" })
+                if (dateMaj) {
+                    title = `Les données ont été mises à jour le ${longDate.format(dateMaj)} à ${shortTime.format(dateMaj)}`
+                    document.getElementById("date-maj").innerHTML = `
+                        (<span class="d-none d-sm-inline" data-bs-toggle="tooltip" title="${title}">maj le ${shortDate.format(dateMaj)}</span><span class="d-sm-none" data-bs-toggle="tooltip" title="${title}">${shortDate.format(dateMaj)}</span>)`
+                }
+            }).then(activateTooltips)
+
+        let map = L.map('map', { attributionControl: false }).setView([47, 2], 6);
+        L.control.attribution({ prefix: 'Leaflet' }).addTo(map);
+
+        L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            maxZoom: 19,
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright" target="_blank" data-bs-toggle="tooltip" title="les contributeurs OpenStreeMap">OpenStreetMap</a>',
+        }).addTo(map)
+
+        clusters = L.markerClusterGroup({
+            maxClusterRadius: 5,
+        });
+        Object.keys(FREQUENCES).forEach(f => {
+            var sousGroupe = L.featureGroup.subGroup(clusters);
+            FREQUENCES[f].layer = sousGroupe;
+            sousGroupe.addTo(map);
+        })
+        map.addLayer(clusters);
+
+        fetch(urlData)
+            .then(response => response.arrayBuffer())
+            .then(buffer => new TextDecoder("cp1252").decode(buffer))
+            .then(data =>
+                Papa.parse(data,
+                    {
+                        header: true,
+                        dynamicTyping: true,
+                        skipEmptyLines: true,
+                        step: parseCsvRow,
+                        complete: onParsingFinished,
+                    })
+            );
+
+        map.on('popupopen autopanstart', activateTooltips)
+
+    </script>
+
+</body>
+
+</html>

@@ -1,0 +1,54 @@
+.details {
+  min-width: 300px;
+}
+
+.usages {
+  padding-bottom: 1rem;
+}
+
+.usages li {
+  padding: 0 0.5rem;
+}
+
+.technos [title] {
+  text-decoration: underline dotted;
+}
+
+.technos [title]:hover {
+  cursor: help;
+}
+
+@font-face {
+  font-family: "EuclidFlex-Bold-WebS";
+  src: url("EuclidFlex-Bold-WebS.woff") format("woff")
+}
+
+
+#header h1 {
+  color: #232253;
+  font-family: EuclidFlex-Bold-WebS, sans-serif;
+  font-size: 150%;
+  font-weight: 400;
+}
+
+#header h1,
+#details {
+  margin: 0 0.1rem 0 0;
+}
+
+#details {
+  font-size: 70%;
+  font-style: italic;
+}
+#details, #details a {
+  color: darkgrey;
+}
+#details a:visited {
+  color: grey;
+}
+
+.marker path {
+  stroke: white;
+  stroke-width: 2px;
+  stroke-linejoin: round;
+}
